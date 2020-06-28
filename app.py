@@ -3,6 +3,8 @@ from bson import ObjectId
 from pymongo import MongoClient
 import os
 
+from fairml import audit_model
+from fairml import plot_generic_dependence_dictionary
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -15,8 +17,7 @@ title = "Eval ML"
 heading = "Eval ML Heading"
 
 client = MongoClient(MONGO_CLIENT)
-db = client.test
-db.authenticate(name="localhost",password=MONGO_PASSWORD)
+db = client.scores
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -26,13 +27,23 @@ def index():
         return render_template('form.html')
     elif request.method == 'POST':
         # User has sent us data
-        image = request.files['model']
+        model = request.files['model']
         data = request.files['data']
-        client = ComputerVisionClient(COGSVCS_CLIENTURL, CognitiveServicesCredentials(COGSVCS_KEY))
-        result = client.describe_image_in_stream(image)
-        message = 'No dog found. How sad. :-('
-        if 'dog' in result.tags:
-            message = 'There is a dog! Wonderful!!'
+
+        #  call audit model with model
+        importances, _ = audit_model(model.predict, data)
+
+        # print feature importance
+        print(importances)
+        fig = plot_dependencies(
+            importances.get_compress_dictionary_into_key_median(),
+            reverse_values=False,
+            title="FairML feature dependence"
+        )
+
+        plt.show()
+
+
         return render_template('result.html', message=message)
 
 if __name__ == "__main__":
