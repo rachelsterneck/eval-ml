@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='general.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='chart.js')}}">
+    <script src="{{ url_for('static', filename='Chart.js')}}"></script>
+    <script src="{{ url_for('static', filename='util.js')}}"></script>
+
 
     <style>
         #tble {
             text-align:center;
             margin-left:auto;
             margin-right:auto;
-            padding-left:33%;
+            padding-left:10%;
+            padding-right: 10%;
         }
     </style>
 </head>
@@ -30,7 +33,7 @@
         <div class="collapse navbar-collapse flex-row-reverse " id="navbarNavAltMarkup" >
             <div class="navbar-nav">
                 <a class="nav-item nav-link" style="font-size:22px;"  href="form.html">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" style="font-size:22px;" active" href="ranking.hmtl">Ranking</a>
+                <a class="nav-item nav-link" style="font-size:22px;" active href="ranking.hmtl">Ranking</a>
             </div>
         </div>
     </nav>
@@ -44,23 +47,23 @@
                     <thead>
                         <tr>
                             <th>Organization</th>
-                            <th>Gender Importance </th>
-                            <th>Married Importance</th>
-                            <th>Dependents Importance</th>
-                            <th>Education Importance</th>
-                            <th>Self Employed Importance</th>
-                            <th>Applicant Income Importance</th>
-                            <th>Coapplicaent Income Importance</th>
-                            <th>Loan Amount Term Importance</th>
-                            <th>Credit History Importance</th>
-                            <th>Property Area Importance</th>
+                            <th>Gender </th>
+                            <th>Married</th>
+                            <th>Dependents</th>
+                            <th>Education</th>
+                            <th>Self Employed</th>
+                            <th>Applicant Income</th>
+                            <th>Coapplicaent Income</th>
+                            <th>Loan Amount Term</th>
+                            <th>Credit History</th>
+                            <th>Property Area</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <tr>
                             <td>
-                                Microsoft
+                                Facebook
                             </td>
                             <td>0.10416666666666667</td>
                             <td>0.058333333333333334</td>
@@ -94,58 +97,138 @@
                     </tbody>
                 </table>    
             </div>
+
+        <div id="container" style="width: 75%; margin-left: auto; margin-right: auto;">
+            <canvas style="margin-left: auto; margin-right: auto;" id="canvas1"></canvas>
+        </div>
+
+
+        <script>
+		var color = Chart.helpers.color;
+		var horizontalBarChartData1 = {
+			labels: ['Gender', 'Married', 'Dependents', 'Education', 'Self-Employed', 'Applicant Income', 'Coapplicant Income', 'Loan Amount', 'Loan Amount Term', 'Credit History', 'Property Area'],
+			datasets: [{
+				label: 'Facebook',
+				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.red,
+				borderWidth: 1,
+
+				data: [
+                    0.110416666666666667,
+                    0.058333333333333334,
+                    -0.052083333333333336,
+                    -0.014583333333333334,
+                    -0.01875,
+                    -0.0375,
+                    -0.016666666666666666,
+                    -0.08125,
+                    -0.1312,
+                    0.4,
+                    -0.08333333333333333,
+				]
+			}, {
+				label: 'IBM',
+				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.blue,
+				data: [
+                    -0.22654547808313583,
+                    0.1828053964411614,
+                    0.07617549520455695,
+                    -0.053157398550754395,
+                    0.032526317862067146,
+                    -0.05564600263189827,
+                    -0.03106582412466198,
+                    -0.16868020766961472,
+                    -0.25221427316577766,
+                    0.26891234005038683,
+                    0.19016161886128913,
+				]
+			}]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas1').getContext('2d');
+			window.myHorizontalBar1 = new Chart(ctx, {
+				type: 'horizontalBar',
+				data: horizontalBarChartData1,
+				options: {
+					indexAxis: 'y',
+					// Elements options apply to all of the options unless overridden in a dataset
+					// In this case, we are setting the border of each horizontal bar to be 2px wide
+					elements: {
+						rectangle: {
+							borderWidth: 2,
+						}
+					},
+					responsive: true,
+					legend: {
+						position: 'right',
+					},
+					title: {
+						display: true,
+						text: 'Feature Importance Comparison'
+					}
+				}
+			});
+
+		};
+
+        </script>
+
+            <div class="clearfloat"></div>
             <h4 style="text-align:center">Propublica COMPAS Recidivism Risk Score Data</h4>
             <div id="tble">
                
                 <table class="table table-hover table-responsive mt-4">
                     <thead>
                         <tr>
-                            <th>Organization</th>
-                            <th>Gender Importance </th>
-                            <th>Married Importance</th>
-                            <th>Dependents Importance</th>
-                            <th>Education Importance</th>
-                            <th>Self Employed Importance</th>
-                            <th>Applicant Income Importance</th>
-                            <th>Coapplicaent Income Importance</th>
-                            <th>Loan Amount Term Importance</th>
-                            <th>Credit History Importance</th>
-                            <th>Property Area Importance</th>
+                            <th>Two Year Recidivism</th>
+                            <th>Number of Priors </th>
+                            <th>Age Above Fourty-Five</th>
+                            <th>Age Below Twenty-Five</th>
+                            <th>African American</th>
+                            <th>Asian</th>
+                            <th>Hispanic</th>
+                            <th>Native American</th>
+                            <th>Other</th>
+                            <th>Female</th>
+                            <th>Misdemeanor</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <tr>
                             <td>
-                                Facebook
+                                Amazon
                             </td>
-                            <td>0.10416666666666667</td>
-                            <td>0.058333333333333334</td>
-                            <td>-0.052083333333333336</td>
-                            <td>-0.014583333333333334</td>
-                            <td>-0.01875</td>
-                            <td>-0.0375</td>
-                            <td>-0.016666666666666666</td>
-                            <td>-0.08125</td>
-                            <td>-0.13125</td>
-                            <td>0.4</td>
-                            <td>-0.08333333333333333</td>
+                            <td>0.2415748541801685</td>
+                            <td>0.35029163966299415</td>
+                            <td>-0.006642903434867142</td>
+                            <td>0.17141931302657162</td>
+                            <td>0.24935191186001296</td>
+                            <td>-0.0003240440699935191</td>
+                            <td>-0.011989630589760207</td>
+                            <td>0.0006480881399870382</td>
+                            <td>-0.002916396629941672</td>
+                            <td>0.056707712248865845</td>
+                            <td>-0.06707712248865846</td>
                         </tr>
                         <tr>
                             <td>
-                                Amazon
+                                Microsoft
                             </td>
-                            <td>-0.22654547808313583</td>
-                            <td>0.1828053964411614</td>
-                            <td>0.07617549520455695</td>
-                            <td>-0.053157398550754395</td>
-                            <td>0.032526317862067146</td>
-                            <td>-0.05564600263189827</td>
-                            <td>-0.03106582412466198</td>
-                            <td>-0.16868020766961472</td>
-                            <td>-0.25221427316577766</td>
-                            <td>0.26891234005038683</td>
-                            <td>0.19016161886128913</td>
+                            <td>0.05288340531858405</td>
+                            <td>0.10016430693283485</td>
+                            <td>-0.002630267589735549</td>
+                            <td>0.03136494448114457</td>
+                            <td>0.05419757073128353</td>
+                            <td>0.00016575566995030927</td>
+                            <td>0.0034817441146152922</td>
+                            <td>.00007378229791444903</td>
+                            <td>-0.002191102153403963</td>
+                            <td>0.01011240900880318</td>
+                            <td>0.01796400786627118</td>
                         </tr>
 
                     </tbody>
@@ -154,5 +237,81 @@
                 
 
             </div>
+            <div id="container" style="width: 75%; margin-left: auto; margin-right: auto;">
+                <canvas style="margin-left: auto; margin-right: auto;" id="canvas2"></canvas>
+            </div>
+    
+    
+            <script>
+            var color = Chart.helpers.color;
+            var horizontalBarChartData2 = {
+                labels: ['Two Year Recidivism', 'Number of Priors', 'Age Above Fourty-Five', 'Age Below Twenty-Five', 'African American', 'Asian', 
+                    'Hispanic', 'Native American', 'Other', 'Female', 'Misdemeanor'],
+                datasets: [{
+                    label: 'Amazon',
+                    backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.red,
+                    borderWidth: 1,
+    
+                    data: [0.2415748541801685,
+                            0.35029163966299415,
+                            -0.006642903434867142,
+                            0.17141931302657162,
+                            0.24935191186001296,
+                            -0.0003240440699935191,
+                            -0.011989630589760207,
+                            0.0006480881399870382,
+                            -0.002916396629941672,
+                            0.056707712248865845,
+                            -0.06707712248865846,
+                    ]
+                }, {
+                    label: 'Microsoft',
+                    backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                    borderColor: window.chartColors.blue,
+                    data: [0.05288340531858405,
+                            0.10016430693283485,
+                            -0.00263026758973554,
+                            0.03136494448114457,
+                            0.05419757073128353,
+                            0.00016575566995030927,
+                            0.0034817441146152922,
+                            .00007378229791444903,
+                            -0.002191102153403963,
+                            0.01011240900880318,
+                            0.01796400786627118,
+                            ]
+                }]
+    
+            };
+    
+            window.onload = function() {
+                var ctx = document.getElementById('canvas2').getContext('2d');
+                window.myHorizontalBar2 = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: horizontalBarChartData2,
+                    options: {
+                        indexAxis: 'y',
+                        // Elements options apply to all of the options unless overridden in a dataset
+                        // In this case, we are setting the border of each horizontal bar to be 2px wide
+                        elements: {
+                            rectangle: {
+                                borderWidth: 2,
+                            }
+                        },
+                        responsive: true,
+                        legend: {
+                            position: 'right',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Chart.js Horizontal Bar Chart'
+                        }
+                    }
+                });
+    
+            };
+    
+            </script>
 </body>
 </html>

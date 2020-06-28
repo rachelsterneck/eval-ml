@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='general.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.js')}}">
     <script src="{{ url_for('static', filename='Chart.js')}}"></script>
     <script src="{{ url_for('static', filename='util.js')}}"></script>
 
@@ -48,9 +47,10 @@
         <div id="chart">
             <h2>Here are your results</h2>
             
-            <div id="container" style="width: 75%;">
-                <canvas id="canvas"></canvas>
+            <div id="container" style="width: 75%; margin-left: auto; margin-right: auto;">
+                <canvas style="margin-left: auto; margin-right: auto;" id="canvas"></canvas>
             </div>
+            
             <script>
                 var color = Chart.helpers.color;
                 var horizontalBarChartData = {
@@ -64,11 +64,9 @@
                     scales: {
                         yAxes: [{
                             labelString: 'Features',
-                            }
                         }],
                         xAxes: [{
                             labelString: 'Importances',
-                            }
                         }]
                     }
         
@@ -105,12 +103,11 @@
         </div>
 
         <div id="added">
-            <div id="gopub"><input class="btn btn-primary" type="button" value="+"></div>
             <form id="addme" action="/result" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Organization</label>
-                    <input type="text" class="form-control" name="organization" id="exampleFormControlInput1" placeholder="Microsoft AI">
+                    <input type="text" class="form-control" name="organization" id="exampleFormControlInput1" placeholder="Dogs AI">
                 </div>
 
                 <div class="form-group">

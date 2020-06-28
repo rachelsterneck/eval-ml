@@ -33,43 +33,14 @@ def index():
         # User is requesting the form
         return render_template('form.html')
     elif request.method == 'POST':
-        #data = pd.read_csv(request.files['datafile'])
-        #model_pickle = request.files['modelfile']
-        #model = pickle.load(model_pickle)
-
-        ### TEMP 
-    
-        loans_data = pd.read_csv(
-            filepath_or_buffer="test_data/full_data_loans.csv")
-
-        loans_data = loans_data.drop("Loan_ID", 1)
-        cat_list = ['Gender', 'Married', 'Dependents', 'Education', 'Self_Employed', "Property_Area", "Loan_Status"]
-        for name in cat_list:
-            loans_data[name] = loans_data[name].astype('category')
-
-        loans_data = loans_data.dropna()
-
-        cat_columns = loans_data.select_dtypes(['category']).columns
-        loans_data[cat_columns] = loans_data[cat_columns].apply(lambda x: x.cat.codes)
-
-        y = loans_data.Loan_Status.values
-        loans_data = loans_data.drop("Loan_Status", 1)
-
-
-        #loans_data.to_csv('../test_data/loans.csv', index=False)
-
-        model = AdaBoostRegressor()
-        model_name = "LogisticRegression"
-
-        # train model
-        model.fit(loans_data.values, y)
-
-        ### TEMP
+        data = pd.read_csv(request.files['datafile'])
+        model_pickle = request.files['modelfile']
+        model = pickle.load(model_pickle)
 
         #  call audit model with model
-        importances, _ = audit_model(model.predict, loans_data)
-        print('printing importances')
-        print(importances)
+        importances, _ = audit_model(model.predict, data)
+        # print('printing importances')
+        # print(importances)
 
         importances_dict = {}
         for key, value in dict(importances).items():
