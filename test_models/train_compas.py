@@ -14,6 +14,7 @@ propublica_data = pd.read_csv(
 compas_rating = propublica_data.score_factor.values
 propublica_data = propublica_data.drop("score_factor", 1)
 
+propublica_data.to_csv('../test_data/propublica.csv', index=False)
 
 # this is just for demonstration, any classifier or regressor
 # can be used here. fairml only requires a predict function

@@ -1,0 +1,23 @@
+#content h4 {
+    padding-top: 1%;
+}
+
+.custom-file {
+    width: 30%;
+    padding-top: 1%;
+}
+
+#uinfo {
+    padding-top: 2%;
+}
+
+.clearfloat {
+    clear: both;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+form {
+    margin-left: auto;
+    margin-right: auto;
+}
