@@ -7,6 +7,7 @@ import numpy as np
 import pickle
 import json
 from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.ensemble import RandomForestClassifier, AdaBoostRegressor
 
 from fairml import audit_model
 #from fairml import plot_generic_dependence_dictionary
@@ -57,7 +58,7 @@ def index():
 
         #loans_data.to_csv('../test_data/loans.csv', index=False)
 
-        model = LogisticRegression()
+        model = AdaBoostRegressor()
         model_name = "LogisticRegression"
 
         # train model
@@ -108,7 +109,7 @@ def results():
 def ranking():
     if request.method == 'GET':
 
-        collection.find({'dataset'})
+        #collection.find({'dataset'})
         # 
         """
 
